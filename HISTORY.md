@@ -6,3 +6,4 @@
 [2026-03-18T13:00:00] feat: add missing backend core files and python scripts
 [2026-03-25T14:00:00] chore: init frontend project with vite and tailwind
 [2026-04-05T09:30:00] feat: setup react base and static assets
+[2026-04-15T10:15:00] feat: implement frontend services and custom hooks
