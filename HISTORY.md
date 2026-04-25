@@ -8,3 +8,4 @@
 [2026-04-05T09:30:00] feat: setup react base and static assets
 [2026-04-15T10:15:00] feat: implement frontend services and custom hooks
 [2026-04-20T11:25:00] feat: build ui components and charts
+[2026-04-25T12:40:00] feat: add main dashboard and routing pages
