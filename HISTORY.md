@@ -11,3 +11,4 @@
 [2026-04-25T12:40:00] feat: add main dashboard and routing pages
 [2026-05-02T13:00:00] docs: add architecture design documentation
 [2026-05-06T14:10:00] fix: overall fixes, logging updates and polish
+[2026-05-07T15:20:00] refactor: modularize LiveMarketPage into separate functional components
