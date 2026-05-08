@@ -12,3 +12,4 @@
 [2026-05-02T13:00:00] docs: add architecture design documentation
 [2026-05-06T14:10:00] fix: overall fixes, logging updates and polish
 [2026-05-07T15:20:00] refactor: modularize LiveMarketPage into separate functional components
+[2026-05-08T16:30:00] refactor: migrate to React Query and decouple chart logics
