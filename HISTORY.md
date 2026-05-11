@@ -14,3 +14,4 @@
 [2026-05-07T15:20:00] refactor: modularize LiveMarketPage into separate functional components
 [2026-05-08T16:30:00] refactor: migrate to React Query and decouple chart logics
 [2026-05-09T17:45:00] refactor: implement clean architecture for service layer
+[2026-05-11T12:00:00] feat: centralize configurations, add formatters, and polish UI
