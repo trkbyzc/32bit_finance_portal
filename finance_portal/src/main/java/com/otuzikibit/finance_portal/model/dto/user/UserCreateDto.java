@@ -1,4 +1,4 @@
-package com.otuzikibit.finance_portal.model.dto;
+package com.otuzikibit.finance_portal.model.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

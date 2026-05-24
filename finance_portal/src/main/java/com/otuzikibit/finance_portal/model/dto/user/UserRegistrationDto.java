@@ -1,4 +1,4 @@
-package com.otuzikibit.finance_portal.model.dto;
+package com.otuzikibit.finance_portal.model.dto.user;
 
 import lombok.Data;
 import java.util.Map;

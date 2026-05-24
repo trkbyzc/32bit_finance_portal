@@ -1,17 +1,15 @@
-package com.otuzikibit.finance_portal.model.dto;
+package com.otuzikibit.finance_portal.model.dto.user;
 
-import lombok.AllArgsConstructor;
+import com.otuzikibit.finance_portal.model.enums.RiskProfile; // 🚀 IMPORT ŞART
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserResponseDto {
     private UUID id;
     private String name;
     private String email;
-    private LocalDateTime createdAt;
+    private com.otuzikibit.finance_portal.model.enums.RiskProfile riskProfile; // 🚀 BU EKSİKTİ
+    private java.time.LocalDateTime createdAt;
 }
