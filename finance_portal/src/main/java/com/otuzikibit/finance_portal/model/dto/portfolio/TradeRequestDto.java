@@ -1,4 +1,4 @@
-package com.otuzikibit.finance_portal.model.dto;
+package com.otuzikibit.finance_portal.model.dto.portfolio;
 
 import com.otuzikibit.finance_portal.model.enums.AssetType;
 import lombok.AllArgsConstructor;
