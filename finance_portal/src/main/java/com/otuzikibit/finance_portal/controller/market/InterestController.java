@@ -1,4 +1,4 @@
-package com.otuzikibit.finance_portal.controller;
+package com.otuzikibit.finance_portal.controller.market;
 
 import com.otuzikibit.finance_portal.model.dto.account.InterestYieldDto;
 import com.otuzikibit.finance_portal.service.market.InterestService;

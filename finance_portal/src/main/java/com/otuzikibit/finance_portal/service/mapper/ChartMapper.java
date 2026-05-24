@@ -1,4 +1,4 @@
-package com.otuzikibit.finance_portal.service.transformation;
+package com.otuzikibit.finance_portal.service.mapper;
 
 import com.otuzikibit.finance_portal.model.dto.market.CurrencyRateDto;
 import com.otuzikibit.finance_portal.model.dto.market.HistoricalDataDto;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class ChartTransformationService {
+public class ChartMapper {
 
     /**
      * Moving Average hesapla
