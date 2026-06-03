@@ -32,7 +32,6 @@ import com.otuzikibit.finance_portal.model.dto.whatif.WhatIfAssetSeries;
 import com.otuzikibit.finance_portal.model.dto.whatif.WhatIfRequestDto;
 import com.otuzikibit.finance_portal.model.dto.whatif.WhatIfResultDto;
 import com.otuzikibit.finance_portal.model.enums.AssetType;
-import com.otuzikibit.finance_portal.model.enums.RiskProfile;
 import com.otuzikibit.finance_portal.model.enums.Role;
 import com.otuzikibit.finance_portal.model.enums.TickerScope;
 import com.otuzikibit.finance_portal.model.enums.TradeSide;
@@ -387,9 +386,8 @@ class DtoExerciserTest {
         a.setId(UUID.randomUUID());
         a.setName("alice");
         a.setEmail("a@b.com");
-        a.setRiskProfile(RiskProfile.BALANCED);
         a.setCreatedAt(LocalDateTime.now());
-        assertEquals(RiskProfile.BALANCED, a.getRiskProfile());
+        assertEquals("alice", a.getName());
         assertNotNull(a.toString());
     }
 
@@ -483,7 +481,6 @@ class DtoExerciserTest {
     void enums_valueOfAndValues() {
         assertEquals(AssetType.STOCK, AssetType.valueOf("STOCK"));
         assertTrue(AssetType.values().length > 0);
-        assertEquals(RiskProfile.CONSERVATIVE, RiskProfile.valueOf("CONSERVATIVE"));
         assertEquals(Role.USER, Role.valueOf("USER"));
         assertEquals(TickerScope.HOME_ONLY, TickerScope.valueOf("HOME_ONLY"));
         assertEquals(TradeSide.BUY, TradeSide.valueOf("BUY"));

@@ -1,6 +1,5 @@
 package com.otuzikibit.finance_portal.model.entity;
 
-import com.otuzikibit.finance_portal.model.enums.RiskProfile;
 import com.otuzikibit.finance_portal.model.enums.Role;
 import com.otuzikibit.finance_portal.model.enums.TickerScope;
 import jakarta.persistence.*;
@@ -35,9 +34,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Enumerated(EnumType.STRING)
-    private RiskProfile riskProfile;
 
     @Column(name = "banned_until")
     private LocalDateTime bannedUntil;
@@ -74,8 +70,4 @@ public class User {
         return user;
     }
 
-    // 🚀 RICH DOMAIN MODEL: İş mantığını barındıran metod
-    public void applyKycProfile(RiskProfile profile) {
-        this.riskProfile = profile;
-    }
 }

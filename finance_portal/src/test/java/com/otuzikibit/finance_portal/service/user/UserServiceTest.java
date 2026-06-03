@@ -1,10 +1,8 @@
 package com.otuzikibit.finance_portal.service.user;
 
 import com.otuzikibit.finance_portal.exception.ResourceNotFoundException;
-import com.otuzikibit.finance_portal.model.dto.user.UserRegistrationDto;
 import com.otuzikibit.finance_portal.model.dto.user.UserResponseDto;
 import com.otuzikibit.finance_portal.model.entity.User;
-import com.otuzikibit.finance_portal.model.enums.RiskProfile;
 import com.otuzikibit.finance_portal.model.enums.Role;
 import com.otuzikibit.finance_portal.repository.UserRepository;
 import com.otuzikibit.finance_portal.service.mapper.user.UserMapper;
@@ -19,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,7 +32,6 @@ class UserServiceTest {
 
     @Mock private UserRepository userRepo;
     @Mock private KafkaProducerService kafkaProducer;
-    @Mock private RiskAnalysisService riskAnalysisService;
     @Mock private UserMapper userMapper;
 
     @InjectMocks private UserService service;
@@ -109,45 +105,6 @@ class UserServiceTest {
 
         assertEquals(Role.USER, user.getRole());
         verify(userRepo).save(user);
-    }
-
-    // -------- processKyc --------
-
-    @Test
-    void processKyc_userMissing_throws404() {
-        when(userRepo.findById(userId)).thenReturn(Optional.empty());
-
-        UserRegistrationDto reg = new UserRegistrationDto();
-        reg.setSurveyAnswers(Map.of("q1", 3));
-
-        assertThrows(ResourceNotFoundException.class, () -> service.processKyc(userId, reg));
-    }
-
-    @Test
-    void processKyc_calculatesProfileAndPersists() {
-        when(userRepo.findById(userId)).thenReturn(Optional.of(user));
-        when(riskAnalysisService.calculateProfile(any())).thenReturn(RiskProfile.BALANCED);
-
-        UserRegistrationDto reg = new UserRegistrationDto();
-        reg.setSurveyAnswers(Map.of("q1", 3, "q2", 4));
-
-        String result = service.processKyc(userId, reg);
-
-        assertEquals("BALANCED", result);
-        verify(userRepo).save(user);
-    }
-
-    @Test
-    void processKyc_aggressiveProfile_appliedToUser() {
-        when(userRepo.findById(userId)).thenReturn(Optional.of(user));
-        when(riskAnalysisService.calculateProfile(any())).thenReturn(RiskProfile.AGGRESSIVE);
-
-        UserRegistrationDto reg = new UserRegistrationDto();
-        reg.setSurveyAnswers(Map.of("q1", 5));
-
-        String result = service.processKyc(userId, reg);
-
-        assertEquals("AGGRESSIVE", result);
     }
 
     // -------- getAllUsers --------
