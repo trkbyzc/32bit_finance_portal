@@ -5,6 +5,7 @@ import com.otuzikibit.finance_portal.model.dto.user.UserResponseDto;
 import com.otuzikibit.finance_portal.model.entity.User;
 import com.otuzikibit.finance_portal.model.enums.Role;
 import com.otuzikibit.finance_portal.repository.UserRepository;
+import com.otuzikibit.finance_portal.service.auth.KeycloakAdminService;
 import com.otuzikibit.finance_portal.service.mapper.user.UserMapper;
 import com.otuzikibit.finance_portal.service.messaging.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final KafkaProducerService kafkaProducerService;
     private final UserMapper userMapper;
+    private final KeycloakAdminService keycloakAdminService;
 
     @Transactional
     public UserResponseDto syncAndCreateUser(UUID userId, String username, String email) {
@@ -88,6 +90,40 @@ public class UserService {
         user.setEmailNotificationsEnabled(enabled);
         userRepository.save(user);
         log.info("[USER] {} e-posta bildirimi {} olarak güncellendi.", user.getUsername(), enabled);
+    }
+
+    /**
+     * Kullanıcının şifresini değiştirir. Önce eski şifreyi Keycloak token endpoint'inde
+     * doğrular (verifyPassword), doğruysa Admin API ile yenisini set eder.
+     *
+     * Validasyon kuralları:
+     *  - yeni şifre min 8 karakter
+     *  - yeni == eski olmamalı
+     *
+     * Hata mesajları kullanıcıya yansıtılır (IllegalArgumentException).
+     */
+    public void changePassword(UUID userId, String oldPassword, String newPassword) {
+        if (oldPassword == null || oldPassword.isBlank()) {
+            throw new IllegalArgumentException("Mevcut şifre boş olamaz.");
+        }
+        if (newPassword == null || newPassword.length() < 8) {
+            throw new IllegalArgumentException("Yeni şifre en az 8 karakter olmalı.");
+        }
+        if (newPassword.equals(oldPassword)) {
+            throw new IllegalArgumentException("Yeni şifre eskisiyle aynı olamaz.");
+        }
+
+        User user = findUserEntityById(userId);
+        String username = user.getUsername();
+
+        // 1) Eski şifre doğru mu?
+        if (!keycloakAdminService.verifyPassword(username, oldPassword)) {
+            throw new IllegalArgumentException("Mevcut şifre yanlış.");
+        }
+
+        // 2) Keycloak user id'si (DB userId = JWT sub = Keycloak user id)
+        keycloakAdminService.setPassword(userId.toString(), newPassword);
+        log.info("[USER] {} şifresini değiştirdi.", username);
     }
 
     private User findUserEntityById(UUID id) {
