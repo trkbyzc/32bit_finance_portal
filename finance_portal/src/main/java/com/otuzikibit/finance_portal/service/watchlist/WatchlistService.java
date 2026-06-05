@@ -9,6 +9,8 @@ import com.otuzikibit.finance_portal.model.entity.WatchlistItem;
 import com.otuzikibit.finance_portal.model.enums.AssetType;
 import com.otuzikibit.finance_portal.repository.UserRepository;
 import com.otuzikibit.finance_portal.repository.WatchlistItemRepository;
+import com.otuzikibit.finance_portal.domains.fund.dto.FundDto;
+import com.otuzikibit.finance_portal.domains.fund.service.FundService;
 import com.otuzikibit.finance_portal.security.SecurityUtils;
 import com.otuzikibit.finance_portal.service.market.MarketChartService;
 import com.otuzikibit.finance_portal.service.portfolio.PortfolioPriceService;
@@ -37,6 +39,7 @@ public class WatchlistService {
     private final SecurityUtils securityUtils;
     private final PortfolioPriceService portfolioPriceService;
     private final MarketChartService marketChartService;
+    private final FundService fundService;
 
     public List<WatchlistItemDto> getMyWatchlist() {
         UUID userId = securityUtils.getCurrentUserId();
@@ -107,11 +110,39 @@ public class WatchlistService {
 
     private List<?> safeFetchHistory(String symbol, AssetType assetType) {
         try {
+            // FUND için kategori ayrımı: TEFAS TR fonu mu, yoksa global ETF (Yahoo) mi?
+            // FundChartStrategy yalnız category=TR_FUND için çalışıyor; "FUND" gönderirsek
+            // YahooDefaultChartStrategy'ye düşer ve TR fonu için boş döner → dailyChangePct=0.
+            // Bu yüzden symbol'ün cache'lenmiş TR fon listesinde olup olmadığına bakıp routing yapıyoruz.
+            String category;
+            String range;
+            if (assetType == AssetType.FUND && isTrFundSymbol(symbol)) {
+                category = "TR_FUND";
+                // TR fonların bazı feed'leri haftada güncelleniyor → 1mo bazen <2 nokta döner ve
+                // dailyChange=0 olur. 1y güvenli (sparkline son 30 noktayı zaten kırpıyor).
+                range = "1y";
+            } else {
+                category = assetType.name();
+                range = "1mo";
+            }
             return marketChartService.getHistoricalDataWithEvdsFallback(
-                    symbol, assetType.name(), "1mo", "1d", null, null, 0);
+                    symbol, category, range, "1d", null, null, 0);
         } catch (Exception e) {
             log.warn("[WATCHLIST] {} için historical fetch başarısız: {}", symbol, e.getMessage());
             return List.of();
+        }
+    }
+
+    private boolean isTrFundSymbol(String symbol) {
+        if (symbol == null || symbol.isBlank()) return false;
+        try {
+            List<FundDto> trFunds = fundService.getTrFunds();
+            if (trFunds == null) return false;
+            String want = symbol.trim();
+            return trFunds.stream().anyMatch(f -> f != null && want.equalsIgnoreCase(f.getSymbol()));
+        } catch (Exception e) {
+            log.debug("[WATCHLIST] TR fon kontrolü başarısız ({}): {}", symbol, e.getMessage());
+            return false;
         }
     }
 

@@ -9,6 +9,7 @@ import com.otuzikibit.finance_portal.model.entity.WatchlistItem;
 import com.otuzikibit.finance_portal.model.enums.AssetType;
 import com.otuzikibit.finance_portal.repository.UserRepository;
 import com.otuzikibit.finance_portal.repository.WatchlistItemRepository;
+import com.otuzikibit.finance_portal.domains.fund.service.FundService;
 import com.otuzikibit.finance_portal.security.SecurityUtils;
 import com.otuzikibit.finance_portal.service.market.MarketChartService;
 import com.otuzikibit.finance_portal.service.portfolio.PortfolioPriceService;
@@ -47,6 +48,7 @@ class WatchlistServiceTest {
     @Mock private SecurityUtils securityUtils;
     @Mock private PortfolioPriceService priceService;
     @Mock private MarketChartService chartService;
+    @Mock private FundService fundService;
 
     @InjectMocks private WatchlistService service;
 
