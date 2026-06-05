@@ -36,8 +36,16 @@ class FundServiceTest {
     @Mock
     private CacheService cacheService;
 
+    @Mock
+    private com.otuzikibit.finance_portal.domains.stock.client.TradingViewLogoClient logoClient;
+
     @InjectMocks
     private FundService service;
+
+    @org.junit.jupiter.api.BeforeEach
+    void stubLogos() {
+        when(logoClient.usLogos(any())).thenReturn(java.util.Map.of());
+    }
 
     // -------- getGlobalFunds --------
 
