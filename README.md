@@ -22,6 +22,8 @@
 
 *Developed for the **Toyota & 32Bit Full-Stack Competition 2026***
 
+**English** · [Türkçe](README.tr.md)
+
 </div>
 
 ---
