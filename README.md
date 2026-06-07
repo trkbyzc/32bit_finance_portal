@@ -49,7 +49,7 @@
 
 ## Overview
 
-**32Bit Finance Portal** is a full-stack, multi-asset financial **market tracking and personal portfolio management** web application, built for the Toyota & 32Bit Full-Stack Competition 2025.
+**32Bit Finance Portal** is a full-stack, multi-asset financial **market tracking and personal portfolio management** web application, built for the Toyota & 32Bit Full-Stack Competition 2026.
 
 It aggregates near real-time data across **19 asset / data domains** — foreign exchange, bank & effective rates, crypto, commodities, Turkish gold, stocks (+ BIST & global indices), funds (TEFAS & global ETFs), bonds, Turkish bonds (DİBS), eurobonds, VİOP, futures, IPOs, Turkish & US economic indicators, the economic calendar, and financial news — from many external providers, and serves them with low latency through a sync-and-cache design.
 
