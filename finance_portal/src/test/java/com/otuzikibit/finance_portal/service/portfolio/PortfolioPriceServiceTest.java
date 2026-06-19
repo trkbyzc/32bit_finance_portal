@@ -1,6 +1,7 @@
 package com.otuzikibit.finance_portal.service.portfolio;
 
 import com.otuzikibit.finance_portal.domains.bond.service.BondService;
+import com.otuzikibit.finance_portal.domains.eurobond.service.EurobondService;
 import com.otuzikibit.finance_portal.domains.commodity.dto.CommodityDto;
 import com.otuzikibit.finance_portal.domains.commodity.service.CommodityService;
 import com.otuzikibit.finance_portal.domains.crypto.dto.CryptoDto;
@@ -37,6 +38,7 @@ class PortfolioPriceServiceTest {
 
     @Mock private TurkishBondService turkishBondService;
     @Mock private BondService bondService;
+    @Mock private EurobondService eurobondService;
     @Mock private FutureService futureService;
     @Mock private CryptoService cryptoService;
     @Mock private CurrencyService currencyService;
