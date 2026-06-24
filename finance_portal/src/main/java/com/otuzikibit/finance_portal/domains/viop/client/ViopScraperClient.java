@@ -1,4 +1,4 @@
-﻿package com.otuzikibit.finance_portal.domains.viop.client;
+package com.otuzikibit.finance_portal.domains.viop.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
