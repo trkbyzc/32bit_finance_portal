@@ -1,6 +1,5 @@
 package com.otuzikibit.finance_portal.model.enums;
 
-/** Fiyat alarmı tetikleme koşulu. */
 public enum AlarmCondition {
     /** Fiyat threshold değerine ulaşır veya geçerse ({@code >= threshold}) tetiklenir. */
     ABOVE,

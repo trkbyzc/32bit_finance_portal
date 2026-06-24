@@ -7,9 +7,9 @@ import com.otuzikibit.finance_portal.domains.fund.service.FundService;
 import com.otuzikibit.finance_portal.domains.future.service.FutureService;
 import com.otuzikibit.finance_portal.domains.stock.service.StockService;
 import com.otuzikibit.finance_portal.domains.viop.service.ViopService;
-import com.otuzikibit.finance_portal.domains.currency.service.CurrencyService; // 🚀 YENİ EKLENDİ
-import com.otuzikibit.finance_portal.domains.crypto.service.CryptoService;     // 🚀 YENİ EKLENDİ
-import com.otuzikibit.finance_portal.domains.commodity.service.CommodityService; // 🚀 YENİ EKLENDİ
+import com.otuzikibit.finance_portal.domains.currency.service.CurrencyService;
+import com.otuzikibit.finance_portal.domains.crypto.service.CryptoService;
+import com.otuzikibit.finance_portal.domains.commodity.service.CommodityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,7 +36,6 @@ public class MarketDataController {
     private final ViopService viopService;
     private final FundService fundService;
 
-    // 🚀 UNUTULAN/SİLİNEN SERVİSLER GERİ GELDİ
     private final CurrencyService currencyService;
     private final CryptoService cryptoService;
     private final CommodityService commodityService;
@@ -46,13 +45,11 @@ public class MarketDataController {
     public ResponseEntity<Map<String, Object>> getAllMarketData() {
         Map<String, Object> responseMap = new HashMap<>();
 
-        // 🚀 Frontend bu 'currencies' kelimesini arıyor! Eklendi!
         responseMap.put("currencies", currencyService.getCurrencyRates());
         responseMap.put("cryptos", cryptoService.getCryptoRates());
         responseMap.put("commodities", commodityService.getCommodities());
         responseMap.put("turkish_gold", commodityService.getTurkishGold());
 
-        // Mevcut olanlar
         responseMap.put("stocks", stockService.getStocks());
         responseMap.put("indices", stockService.getIndices());
         responseMap.put("global_bonds", bondService.getGlobalBonds());
